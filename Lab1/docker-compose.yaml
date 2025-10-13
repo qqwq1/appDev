@@ -1,0 +1,36 @@
+
+services:
+  postgres_db:
+    image: postgres
+    container_name: postgres_db_compose
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-test_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - my_network
+
+  my_pgadmin:
+    image: dpage/pgadmin4
+    container_name: my_pgadmin_compose
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@ex.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+    ports:
+      - "${PGADMIN_PORT:-8080}:80"
+    depends_on:
+      - postgres_db
+    networks:
+      - my_network
+
+volumes:
+  postgres_data:
+    external: true
+
+networks:
+  my_network:
+    external: true
