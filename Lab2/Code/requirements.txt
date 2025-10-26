@@ -1,0 +1,9 @@
+sqlalchemy
+alembic
+psycopg2-binary
+asyncpg
+pydantic
+pydantic-settings
+greenlet
+psycopg
+psycopg-binary
